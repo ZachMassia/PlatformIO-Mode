@@ -1,9 +1,9 @@
-;;; platformio-mode.el --- PlatformIO integration for Emacs
+;;; platformio-mode.el --- PlatformIO integration
 
 ;; Author: Zach Massia <zmassia@gmail.com>
 ;; URL: https://github.com/zachmassia/platformio-mode
 ;; Version: 0.1.0
-;; Package-Requires: ((projectile "20151130.1039"))
+;; Package-Requires: ((projectile "0.13.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
