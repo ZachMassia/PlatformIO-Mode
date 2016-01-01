@@ -31,7 +31,7 @@ The following keybindings are currently available.
 
 ## Installation
 
-The recommended way to install PlatformIO-Mode is using MELPA.
+The recommended way to install PlatformIO-Mode is using [MELPA](https://melpa.org/).
 
 ### Configuration
 
@@ -41,7 +41,7 @@ buffer. It enables scrolling and ansi-colors.
 Here is a sample config using PlatformIO-Mode in conjuction with [company](http://company-mode.github.io/),  [irony](https://github.com/Sarcasm/irony-mode) and [flycheck](http://www.flycheck.org/).
 
 ```elisp
-;; Add the required company backend
+;; Add the required company backend.
 (add-to-list 'company-backends 'company-irony)
 
 ;; Enable irony and platformio for all c++ files.
@@ -50,7 +50,7 @@ Here is a sample config using PlatformIO-Mode in conjuction with [company](http:
                            (irony-eldoc)
                            (platformio-mode)))
 
-;; Use irony's completion functions, and enable 
+;; Use irony's completion functions.
 (add-hook 'irony-mode-hook
           (lambda ()
             (define-key irony-mode-map [remap completion-at-point]
@@ -61,10 +61,10 @@ Here is a sample config using PlatformIO-Mode in conjuction with [company](http:
 
             (irony-cdb-autosetup-compile-options)))
             
-;; Setup irony for flycheck
+;; Setup irony for flycheck.
 (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
 
-;; Enable scrolling and colours in the compile buffer
+;; Enable scrolling and colours in the compile buffer.
 (platformio-setup-compile-buffer)
 ```
 
