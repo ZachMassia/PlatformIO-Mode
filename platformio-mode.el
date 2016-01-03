@@ -24,7 +24,8 @@
 
 ;;; Commentary:
 ;;
-;; TODO Add commentary.
+;; A minor mode which allows quick building and uploading of PlatformIO
+;; projects with a few short key sequences.
 ;;
 ;;; Code:
 
@@ -79,6 +80,16 @@
   (interactive)
   (platformio--run-make-target "platformio_upload"))
 
+(defun platformio-programmer-upload ()
+  "Upload PlatformIO project to device using external programmer."
+  (interactive)
+  (platformio--run-make-target "platformio_programmer_upload"))
+
+(defun platformio-spiffs-upload ()
+  "Upload SPIFFS to device."
+  (interactive)
+  (platformio--run-make-target "platformio_spiffs_upload"))
+
 (defun platformio-clean ()
   "Clean PlatformIO project."
   (interactive)
@@ -95,6 +106,8 @@
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "b") #'platformio-build)
     (define-key map (kbd "u") #'platformio-upload)
+    (define-key map (kbd "p") #'platformio-programmer-upload)
+    (define-key map (kbd "s") #'platformio-spiffs-upload)
     (define-key map (kbd "c") #'platformio-clean)
     (define-key map (kbd "d") #'platformio-update)
     map)
@@ -111,6 +124,8 @@
  '("Tools") "PlatformIO"
  '(["Build Project" platformio-build]
    ["Upload Project" platformio-upload]
+   ["Upload using External Programmer" platformio-programmer-upload]
+   ["Upload SPIFFS" platformio-spiffs-upload]
    "--"
    ["Clean Project" platformio-clean]
    ["Update Project Libraries" platformio-update]))
