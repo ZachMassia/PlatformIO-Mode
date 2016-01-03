@@ -21,12 +21,14 @@ The default keymap prefix is `C-c i`.
 
 The following keybindings are currently available.
 
-| Function | Keymap    |
-| -------- | :-------: |
-| Build    | `C-c i b` |
-| Upload   | `C-c i u` |
-| Clean    | `C-c i c` |
-| Update   | `C-c i d` |
+| Function                | Keymap    |
+| --------                | :-------: |
+| Build                   | `C-c i b` |
+| Upload                  | `C-c i u` |
+| Upload using Programmer | `C-c i p` |
+| Upload SPIFFS           | `C-c i s` |
+| Clean                   | `C-c i c` |
+| Update                  | `C-c i d` |
 
 
 ## Installation
