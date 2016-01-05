@@ -2,11 +2,8 @@
 `platformio-mode` is an Emacs minor mode which allows quick building and uploading of
 PlatformIO projects with a few short key sequences.
 
-Code completion can be provided fairly easily by installing [irony-mode](https://github.com/Sarcasm/irony-mode).
-The `CMakeLists.txt` provided by PlatformIO has the `CMAKE_EXPORT_COMPILE_COMMANDS` 
-option enabled by default. 
-As such, any C++ auto-completion compatible with the [JSON Compilation Database Format](http://clang.llvm.org/docs/JSONCompilationDatabase.html)
-should work equally well.
+Code completion can be provided by installing any package compatible with `.clang_complete` files,
+such as [irony-mode](https://github.com/Sarcasm/irony-mode).
 
 
 ## Dependencies
@@ -40,7 +37,8 @@ The recommended way to install PlatformIO-Mode is using [MELPA](https://melpa.or
 `platformio-setup-compile-buffer` is provided to simplify setting up the compilation
 buffer. It enables scrolling and ansi-colors.
 
-Here is a sample config using PlatformIO-Mode in conjuction with [company](http://company-mode.github.io/),  [irony](https://github.com/Sarcasm/irony-mode) and [flycheck](http://www.flycheck.org/).
+
+Here is a sample config using PlatformIO-Mode in conjuction with [company](http://company-mode.github.io/), [irony](https://github.com/Sarcasm/irony-mode), and [flycheck](http://www.flycheck.org/).
 
 ```elisp
 ;; Add the required company backend.
