@@ -58,10 +58,10 @@
 
 
 ;;; Internal functions
-(defun platformio--run-make-target (target)
-  "Call `make TARGET' in the root of the project."
-  (let* ((default-directory (projectile-project-root))
-         (cmd (concat "make " target)))
+(defun platformio--run-cmd (target)
+  "Call `platformio ... TARGET' in the root of the project."
+  (let ((default-directory (projectile-project-root))
+        (cmd (concat "platformio -f -c emacs ") target))
     (save-some-buffers (not compilation-ask-about-save)
                        (lambda ()
                          (projectile-project-buffer-p (current-buffer)
@@ -73,32 +73,32 @@
 (defun platformio-build ()
   "Build PlatformIO project."
   (interactive)
-  (platformio--run-make-target "platformio_build"))
+  (platformio--run-cmd "run"))
 
 (defun platformio-upload ()
   "Upload PlatformIO project to device."
   (interactive)
-  (platformio--run-make-target "platformio_upload"))
+  (platformio--run-cmd "run -t upload"))
 
 (defun platformio-programmer-upload ()
   "Upload PlatformIO project to device using external programmer."
   (interactive)
-  (platformio--run-make-target "platformio_programmer_upload"))
+  (platformio--run-cmd "run -t program"))
 
 (defun platformio-spiffs-upload ()
   "Upload SPIFFS to device."
   (interactive)
-  (platformio--run-make-target "platformio_spiffs_upload"))
+  (platformio--run-cmd "run -t uploadfs"))
 
 (defun platformio-clean ()
   "Clean PlatformIO project."
   (interactive)
-  (platformio--run-make-target "platformio_clean"))
+  (platformio--run-cmd "run -t clean"))
 
 (defun platformio-update ()
   "Update installed PlatformIO libraries."
   (interactive)
-  (platformio--run-make-target "platformio_update"))
+  (platformio--run-cmd "update"))
 
 
 ;;; Minor mode
