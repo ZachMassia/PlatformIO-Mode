@@ -1,4 +1,8 @@
 # PlatformIO Mode
+[![MELPA](https://melpa.org/packages/platformio-mode-badge.svg)](https://melpa.org/#/platformio-mode)
+[![MELPA Stable](https://stable.melpa.org/packages/platformio-mode-badge.svg)](https://stable.melpa.org/#/platformio-mode)
+
+
 `platformio-mode` is an Emacs minor mode which allows quick building and uploading of
 PlatformIO projects with a few short key sequences.
 
