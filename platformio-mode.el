@@ -61,7 +61,7 @@
 (defun platformio--run-cmd (target)
   "Call `platformio ... TARGET' in the root of the project."
   (let ((default-directory (projectile-project-root))
-        (cmd (concat "platformio -f -c emacs ") target))
+        (cmd (concat "platformio -f -c emacs " target)))
     (save-some-buffers (not compilation-ask-about-save)
                        (lambda ()
                          (projectile-project-buffer-p (current-buffer)
