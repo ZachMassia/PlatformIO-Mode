@@ -134,7 +134,7 @@
 ;;;###autoload
 (define-minor-mode platformio-mode
   "PlatformIO integration for Emacs."
-  :lighter "PlatformIO"
+  :lighter " PlatformIO"
   :keymap platformio-mode-map
   :group 'platformio
   :require 'platformio)
