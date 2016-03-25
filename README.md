@@ -45,6 +45,8 @@ buffer. It enables scrolling and ansi-colors.
 Here is a sample config using PlatformIO-Mode in conjuction with [company](http://company-mode.github.io/), [irony](https://github.com/Sarcasm/irony-mode), and [flycheck](http://www.flycheck.org/).
 
 ```elisp
+(require 'platformio-mode)
+
 ;; Add the required company backend.
 (add-to-list 'company-backends 'company-irony)
 
@@ -71,9 +73,3 @@ Here is a sample config using PlatformIO-Mode in conjuction with [company](http:
 ;; Enable scrolling and colours in the compile buffer.
 (platformio-setup-compile-buffer)
 ```
-
-
-
-
-
-
