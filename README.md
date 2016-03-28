@@ -50,11 +50,11 @@ Here is a sample config using PlatformIO-Mode in conjuction with [company](http:
 ;; Add the required company backend.
 (add-to-list 'company-backends 'company-irony)
 
-;; Enable irony and platformio for all c++ files.
+;; Enable irony for all c++ files, and platformio-mode only when needed (platformio.ini present in project root)
 (add-hook 'c++-mode-hook (lambda ()
                            (irony-mode)
                            (irony-eldoc)
-                           (platformio-mode)))
+                           (platformio-conditionally-enable)))
 
 ;; Use irony's completion functions.
 (add-hook 'irony-mode-hook
