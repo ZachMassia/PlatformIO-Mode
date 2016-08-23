@@ -42,7 +42,7 @@ The recommended way to install PlatformIO-Mode is using [MELPA](https://melpa.or
 buffer. It enables scrolling and ansi-colors.
 
 
-Here is a sample config using PlatformIO-Mode in conjuction with [company](http://company-mode.github.io/), [irony](https://github.com/Sarcasm/irony-mode), and [flycheck](http://www.flycheck.org/).
+Here is a sample config using PlatformIO-Mode in conjuction with [company](http://company-mode.github.io/), [irony](https://github.com/Sarcasm/irony-mode), [flycheck](http://www.flycheck.org/) and [flycheck-irony](https://github.com/Sarcasm/flycheck-irony).
 
 ```elisp
 (require 'platformio-mode)
