@@ -30,6 +30,7 @@
 ;;; Code:
 
 (require 'projectile)
+(require 'compile)
 
 ;;; Customization
 (defgroup platformio nil
@@ -43,18 +44,21 @@
   :group 'platformio
   :type 'string)
 
+(define-compilation-mode platformio-compilation-mode "PIOCompilation"
+  "Platformio specific `compilation-mode' derivative."
+  (setq-local compilation-scroll-output t)
+  (require 'ansi-color)
+  (add-hook 'compilation-filter-hook
+            'platformio-compilation-filter-hook nil t))
+
+(defun platformio-compilation-filter-hook ()
+  (when (eq major-mode 'platformio-compilation-mode)
+    (ansi-color-apply-on-region compilation-filter-start (point-max))))
 
 ;;; User setup functions
 (defun platformio-setup-compile-buffer ()
-  "Enables ansi-colors and scrolling in the compilation buffer."
-  (require 'ansi-color)
-
-  (add-hook 'compilation-filter-hook
-            (lambda ()
-              (when (eq major-mode 'compilation-mode)
-                (ansi-color-apply-on-region compilation-filter-start (point-max)))))
-
-  (setq compilation-scroll-output t))
+  "Deprecated function."
+  (warn "The function platformio-setup-compile-buffer is deprecated, remove it from your config!"))
 
 
 (defun platformio-conditionally-enable ()
@@ -74,7 +78,7 @@
                        (lambda ()
                          (projectile-project-buffer-p (current-buffer)
                                                       default-directory)))
-    (compilation-start cmd)))
+    (compilation-start cmd 'platformio-compilation-mode)))
 
 
 ;;; User commands

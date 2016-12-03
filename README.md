@@ -38,10 +38,6 @@ The recommended way to install PlatformIO-Mode is using [MELPA](https://melpa.or
 
 ### Configuration
 
-`platformio-setup-compile-buffer` is provided to simplify setting up the compilation
-buffer. It enables scrolling and ansi-colors.
-
-
 Here is a sample config using PlatformIO-Mode in conjuction with [company](http://company-mode.github.io/), [irony](https://github.com/Sarcasm/irony-mode), [flycheck](http://www.flycheck.org/) and [flycheck-irony](https://github.com/Sarcasm/flycheck-irony).
 
 ```elisp
@@ -71,6 +67,4 @@ Here is a sample config using PlatformIO-Mode in conjuction with [company](http:
 ;; Setup irony for flycheck.
 (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
 
-;; Enable scrolling and colours in the compile buffer.
-(platformio-setup-compile-buffer)
 ```
