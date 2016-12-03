@@ -44,6 +44,11 @@
   :group 'platformio
   :type 'string)
 
+(defcustom platformio-mode-silent nil
+  "Run platformio commands with the silent argument."
+  :group 'platformio
+  :type 'boolean)
+
 (define-compilation-mode platformio-compilation-mode "PIOCompilation"
   "Platformio specific `compilation-mode' derivative."
   (setq-local compilation-scroll-output t)
@@ -70,7 +75,7 @@
 
 
 ;;; Internal functions
-(defun platformio--run-cmd (target)
+(defun platformio--exec (target)
   "Call `platformio ... TARGET' in the root of the project."
   (let ((default-directory (projectile-project-root))
         (cmd (concat "platformio -f -c emacs " target)))
@@ -80,37 +85,47 @@
                                                       default-directory)))
     (compilation-start cmd 'platformio-compilation-mode)))
 
+(defun platformio--silent-arg ()
+  (if platformio-mode-silent
+      "-s "
+    nil))
+
+(defun platformio--run (runcmd &optional NOSILENT)
+  (platformio--exec (concat "run "
+                            (unless NOSILENT
+                              (platformio--silent-arg))
+                            runcmd)))
 
 ;;; User commands
-(defun platformio-build ()
+(defun platformio-build (arg)
   "Build PlatformIO project."
-  (interactive)
-  (platformio--run-cmd "run"))
+  (interactive "P")
+  (platformio--run nil arg))
 
-(defun platformio-upload ()
+(defun platformio-upload (arg)
   "Upload PlatformIO project to device."
-  (interactive)
-  (platformio--run-cmd "run -t upload"))
+  (interactive "P")
+  (platformio--run "-t upload" arg))
 
-(defun platformio-programmer-upload ()
+(defun platformio-programmer-upload (arg)
   "Upload PlatformIO project to device using external programmer."
-  (interactive)
-  (platformio--run-cmd "run -t program"))
+  (interactive "P")
+  (platformio--run "-t program" arg))
 
-(defun platformio-spiffs-upload ()
+(defun platformio-spiffs-upload (arg)
   "Upload SPIFFS to device."
-  (interactive)
-  (platformio--run-cmd "run -t uploadfs"))
+  (interactive "P")
+  (platformio--run "-t uploadfs" arg))
 
-(defun platformio-clean ()
+(defun platformio-clean (arg)
   "Clean PlatformIO project."
-  (interactive)
-  (platformio--run-cmd "run -t clean"))
+  (interactive "P")
+  (platformio--run "-t clean" arg))
 
-(defun platformio-update ()
+(defun platformio-update (arg)
   "Update installed PlatformIO libraries."
   (interactive)
-  (platformio--run-cmd "update"))
+  (platformio--exec "update"))
 
 
 ;;; Minor mode
