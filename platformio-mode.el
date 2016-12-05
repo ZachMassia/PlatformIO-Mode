@@ -45,12 +45,12 @@
   :type 'string)
 
 (defcustom platformio-mode-silent nil
-  "Run platformio commands with the silent argument."
+  "Run PlatformIO commands with the silent argument."
   :group 'platformio
   :type 'boolean)
 
 (define-compilation-mode platformio-compilation-mode "PIOCompilation"
-  "Platformio specific `compilation-mode' derivative."
+  "PlatformIO specific `compilation-mode' derivative."
   (setq-local compilation-scroll-output t)
   (require 'ansi-color)
   (add-hook 'compilation-filter-hook
