@@ -122,7 +122,7 @@
   (interactive "P")
   (platformio--run "-t clean" arg))
 
-(defun platformio-update (arg)
+(defun platformio-update ()
   "Update installed PlatformIO libraries."
   (interactive)
   (platformio--exec "update"))
