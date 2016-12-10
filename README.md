@@ -7,7 +7,8 @@
 PlatformIO projects with a few short key sequences.
 
 Code completion can be provided by installing any package compatible with `.clang_complete` files,
-such as [irony-mode](https://github.com/Sarcasm/irony-mode).
+such as [irony-mode](https://github.com/Sarcasm/irony-mode). To keep the index up to date, run
+`platformio-init-update-workspace` (`C-c i i`) after installing any libraries.
 
 
 ## Dependencies
@@ -30,6 +31,7 @@ The following keybindings are currently available.
 | Upload SPIFFS           | `C-c i s` |
 | Clean                   | `C-c i c` |
 | Update                  | `C-c i d` |
+| Update Workspace        | `C-c i i` |
 
 
 ## Installation

@@ -127,6 +127,11 @@
   (interactive)
   (platformio--exec "update"))
 
+(defun platformio-init-update-workspace ()
+  "Re-initialize project. Will update `.clang-complete' file."
+  (interactive)
+  (platformio--exec "init --ide emacs"))
+
 
 ;;; Minor mode
 (defvar platformio-command-map
@@ -137,6 +142,7 @@
     (define-key map (kbd "s") #'platformio-spiffs-upload)
     (define-key map (kbd "c") #'platformio-clean)
     (define-key map (kbd "d") #'platformio-update)
+    (define-key map (kbd "i") #'platformio-init-update-workspace)
     map)
   "Keymap for PlatformIO mode commands after `platformio-mode-keymap-prefix'.")
 (fset 'platformio-command-map platformio-command-map)
@@ -155,7 +161,8 @@
    ["Upload SPIFFS" platformio-spiffs-upload]
    "--"
    ["Clean Project" platformio-clean]
-   ["Update Project Libraries" platformio-update]))
+   ["Update Project Libraries" platformio-update]
+   ["Update Project Workspace and Index" platformio-init-update-workspace]))
 
 
 ;;;###autoload
