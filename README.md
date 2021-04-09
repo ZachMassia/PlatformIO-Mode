@@ -6,8 +6,8 @@
 `platformio-mode` is an Emacs minor mode which allows quick building and uploading of
 PlatformIO projects with a few short key sequences.
 
-Code completion can be provided by installing any package compatible with `.clang_complete` files,
-such as [irony-mode](https://github.com/Sarcasm/irony-mode). To keep the index up to date, run
+Code completion can be provided by installing any package compatible with `.ccls` files,
+such as [ccls](https://github.com/MaskRay/emacs-ccls). To keep the index up to date, run
 `platformio-init-update-workspace` (`C-c i i`) after installing any libraries.
 
 
@@ -40,33 +40,14 @@ The recommended way to install PlatformIO-Mode is using [MELPA](https://melpa.or
 
 ### Configuration
 
-Here is a sample config using PlatformIO-Mode in conjuction with [company](http://company-mode.github.io/), [irony](https://github.com/Sarcasm/irony-mode), [flycheck](http://www.flycheck.org/) and [flycheck-irony](https://github.com/Sarcasm/flycheck-irony).
+Here is a sample config using PlatformIO-Mode in conjunction with [ccls](https://github.com/MaskRay/emacs-ccls).
 
 ```elisp
 (require 'platformio-mode)
 
-;; Add the required company backend.
-(add-to-list 'company-backends 'company-irony)
-
 ;; Enable irony for all c++ files, and platformio-mode only
 ;; when needed (platformio.ini present in project root).
 (add-hook 'c++-mode-hook (lambda ()
-                           (irony-mode)
-                           (irony-eldoc)
+                           (lsp-deferred)
                            (platformio-conditionally-enable)))
-
-;; Use irony's completion functions.
-(add-hook 'irony-mode-hook
-          (lambda ()
-            (define-key irony-mode-map [remap completion-at-point]
-              'irony-completion-at-point-async)
-
-            (define-key irony-mode-map [remap complete-symbol]
-              'irony-completion-at-point-async)
-
-            (irony-cdb-autosetup-compile-options)))
-            
-;; Setup irony for flycheck.
-(add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
-
 ```

@@ -128,7 +128,7 @@
   (platformio--exec "update"))
 
 (defun platformio-init-update-workspace ()
-  "Re-initialize project. Will update `.clang-complete' file."
+  "Re-initialize project. Will update `.ccls' file."
   (interactive)
   (platformio--exec "init --ide emacs"))
 
