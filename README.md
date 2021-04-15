@@ -45,7 +45,7 @@ Here is a sample config using PlatformIO-Mode in conjunction with [ccls](https:/
 ```elisp
 (require 'platformio-mode)
 
-;; Enable irony for all c++ files, and platformio-mode only
+;; Enable ccls for all c++ files, and platformio-mode only
 ;; when needed (platformio.ini present in project root).
 (add-hook 'c++-mode-hook (lambda ()
                            (lsp-deferred)
