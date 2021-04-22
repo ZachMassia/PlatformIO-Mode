@@ -79,6 +79,8 @@
   "Call `platformio ... TARGET' in the root of the project."
   (let ((default-directory (projectile-project-root))
         (cmd (concat "platformio -f -c emacs " target)))
+    (unless default-directory
+      (user-error "Not in a projectile project, aborting"))
     (save-some-buffers (not compilation-ask-about-save)
                        (lambda ()
                          (projectile-project-buffer-p (current-buffer)
