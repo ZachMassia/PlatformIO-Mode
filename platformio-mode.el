@@ -1,9 +1,13 @@
 ;;; platformio-mode.el --- PlatformIO integration
 
+;; Copyright (C) 2016 Zach Massia
+;; Copyright (C) 2021 Dante Catalfamo
+
 ;; Author: Zach Massia <zmassia@gmail.com>
+;;         Dante Catalfamo <dante@lambda.cx>
 ;; URL: https://github.com/zachmassia/platformio-mode
-;; Version: 0.1.0
-;; Package-Requires: ((projectile "0.13.0"))
+;; Version: 0.3.0
+;; Package-Requires: ((emacs "25.1") (async "1.9.0") (projectile "0.13.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -29,6 +33,9 @@
 ;;
 ;;; Code:
 
+(require 'json)
+(require 'async)
+(require 'seq)
 (require 'projectile)
 (require 'compile)
 
@@ -48,6 +55,12 @@
   "Run PlatformIO commands with the silent argument."
   :group 'platformio
   :type 'boolean)
+
+(defcustom platformio-board-list-buffer "*PlatformIO Boards*"
+  "PlatformIO board list buffer name."
+  :group 'platformio
+  :type 'string)
+
 
 (define-compilation-mode platformio-compilation-mode "PIOCompilation"
   "PlatformIO specific `compilation-mode' derivative."
@@ -98,6 +111,78 @@
                               (platformio--silent-arg))
                             runcmd)))
 
+
+;;; Board list functions
+(defun platformio--add-board (board)
+  "Add a BOARD to a PlatformIO porject."
+  (platformio--exec (string-join (list "init --ide emacs --board " board))))
+
+(defun platformio--build-board-table (_autoignore _noconfirm)
+  "Return a list of all boards supported by PlatforIO."
+  (setq revert-buffer-in-progress-p t)
+  (setq mode-line-process ":refreshing")
+  (async-start
+   (lambda ()
+     (require 'seq)
+     (require 'json)
+     (setq out nil)
+     (seq-map
+      (lambda (board)
+        (push (list (alist-get 'id board)
+                    (vector
+                     `("Add" action
+                       (lambda (_button) (platformio--add-board ,(alist-get 'id board))))
+                     (alist-get 'name board)
+                     (alist-get 'id board)
+                     (alist-get 'mcu board)
+                     (alist-get 'platform board)
+                     (number-to-string (alist-get 'fcpu board))
+                     (number-to-string (alist-get 'ram board))
+                     (number-to-string (alist-get 'rom board))
+                     (string-join (alist-get 'frameworks board) ", ")
+                     (alist-get 'vendor board)
+                     `("URL" action
+                       (lambda (_button)
+                         (browse-url-default-browser ,(alist-get 'url board))))
+                     `("Docs" action
+                       (lambda (_button)
+                         (browse-url-default-browser ,(string-join (list "https://docs.platformio.org/en/latest/boards/"
+                                                                         (alist-get 'platform board)
+                                                                         "/"
+                                                                         (alist-get 'id board)
+                                                                         ".html")))))))
+              out))
+      (json-read-from-string
+       (shell-command-to-string "platformio boards --json-output")))
+     (nreverse out))
+
+   (lambda (result)
+     (with-current-buffer platformio-board-list-buffer
+       (setq tabulated-list-entries result)
+       (tabulated-list-revert)
+       (setq revert-buffer-in-progress-p nil)
+       (setq mode-line-process "")))))
+
+(define-derived-mode platformio-boards-mode tabulated-list-mode "PlatformIO-Boards"
+  "PlatformIO boards mode."
+  (setq tabulated-list-format [("" 3 nil)
+                               ("Name" 24 t)
+                               ("ID" 30 t)
+                               ("MCU" 17 t)
+                               ("Platform" 16 t)
+                               ("CPU Freq" 12 nil)
+                               ("RAM" 12 nil)
+                               ("ROM" 12 nil)
+                               ("Frameworks" 35 nil)
+                               ("Vendor" 20 t)
+                               ("" 4 nil)
+                               ("" 4 nil)])
+  (setq tabulated-list-sort-key nil)
+  (setq tabulated-list-padding 2)
+  (tabulated-list-init-header)
+  (setq revert-buffer-function #'platformio--build-table))
+
+
 ;;; User commands
 (defun platformio-build (arg)
   "Build PlatformIO project."
@@ -134,6 +219,12 @@
   (interactive)
   (platformio--exec "init --ide emacs"))
 
+(defun platformio-boards ()
+  "List boards supported by PlatformIO."
+  (interactive)
+  (switch-to-buffer platformio-board-list-buffer)
+  (platformio-boards-mode)
+  (revert-buffer))
 
 ;;; Minor mode
 (defvar platformio-command-map
@@ -145,6 +236,7 @@
     (define-key map (kbd "c") #'platformio-clean)
     (define-key map (kbd "d") #'platformio-update)
     (define-key map (kbd "i") #'platformio-init-update-workspace)
+    (define-key map (kbd "l") #'platformio-boards)
     map)
   "Keymap for PlatformIO mode commands after `platformio-mode-keymap-prefix'.")
 (fset 'platformio-command-map platformio-command-map)
