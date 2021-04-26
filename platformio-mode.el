@@ -180,7 +180,7 @@
   (setq tabulated-list-sort-key nil)
   (setq tabulated-list-padding 2)
   (tabulated-list-init-header)
-  (setq revert-buffer-function #'platformio--build-table))
+  (setq revert-buffer-function #'platformio--build-board-table))
 
 
 ;;; User commands
