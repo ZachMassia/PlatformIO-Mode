@@ -254,6 +254,7 @@
    ["Upload using External Programmer" platformio-programmer-upload]
    ["Upload SPIFFS" platformio-spiffs-upload]
    "--"
+   ["Add Boards" platformio-boards]
    ["Clean Project" platformio-clean]
    ["Update Project Libraries" platformio-update]
    ["Update Project Workspace and Index" platformio-init-update-workspace]))
