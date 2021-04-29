@@ -118,7 +118,7 @@
   (platformio--exec (string-join (list "init --ide emacs --board " board))))
 
 (defun platformio--build-board-table (_autoignore _noconfirm)
-  "Return a list of all boards supported by PlatforIO."
+  "Return a list of all boards supported by PlatformIO."
   (setq revert-buffer-in-progress-p t)
   (setq mode-line-process ":refreshing")
   (async-start
