@@ -114,7 +114,7 @@
 
 ;;; Board list functions
 (defun platformio--add-board (board)
-  "Add a BOARD to a PlatformIO porject."
+  "Add a BOARD to a PlatformIO project."
   (platformio--exec (string-join (list "init --ide emacs --board " board))))
 
 (defun platformio--build-board-table (_autoignore _noconfirm)
