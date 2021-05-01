@@ -33,6 +33,7 @@ The following keybindings are currently available.
 | Clean                   | `C-c i c` |
 | Update                  | `C-c i d` |
 | Update Workspace        | `C-c i i` |
+| Boards List             | `C-c i l` |
 
 
 ## Installation
