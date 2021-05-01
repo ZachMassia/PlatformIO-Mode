@@ -219,12 +219,19 @@
   (interactive)
   (platformio--exec "init --ide emacs"))
 
+
+(defun platformio-device-monitor ()
+  "Open device monitor."
+  (interactive)
+  (platformio--exec "device monitor"))
+
 (defun platformio-boards ()
   "List boards supported by PlatformIO."
   (interactive)
   (switch-to-buffer platformio-board-list-buffer)
   (platformio-boards-mode)
   (revert-buffer))
+
 
 ;;; Minor mode
 (defvar platformio-command-map
@@ -236,6 +243,7 @@
     (define-key map (kbd "c") #'platformio-clean)
     (define-key map (kbd "d") #'platformio-update)
     (define-key map (kbd "i") #'platformio-init-update-workspace)
+    (define-key map (kbd "m") #'platformio-device-monitor)
     (define-key map (kbd "l") #'platformio-boards)
     map)
   "Keymap for PlatformIO mode commands after `platformio-mode-keymap-prefix'.")
@@ -253,6 +261,7 @@
    ["Upload Project" platformio-upload]
    ["Upload using External Programmer" platformio-programmer-upload]
    ["Upload SPIFFS" platformio-spiffs-upload]
+   ["Device monitor" platformio-device-monitor]
    "--"
    ["Add Boards" platformio-boards]
    ["Clean Project" platformio-clean]

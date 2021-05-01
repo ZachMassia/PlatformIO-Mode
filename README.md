@@ -29,6 +29,7 @@ The following keybindings are currently available.
 | Upload                  | `C-c i u` |
 | Upload using Programmer | `C-c i p` |
 | Upload SPIFFS           | `C-c i s` |
+| Monitor device          | `C-c i m` |
 | Clean                   | `C-c i c` |
 | Update                  | `C-c i d` |
 | Update Workspace        | `C-c i i` |
