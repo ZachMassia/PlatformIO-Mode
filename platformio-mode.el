@@ -70,6 +70,7 @@
             'platformio-compilation-filter-hook nil t))
 
 (defun platformio-compilation-filter-hook ()
+  "Apply colors."
   (when (eq major-mode 'platformio-compilation-mode)
     (ansi-color-apply-on-region compilation-filter-start (point-max))))
 
@@ -78,7 +79,7 @@
   "Deprecated function."
   (warn "The function platformio-setup-compile-buffer is deprecated, remove it from your config!"))
 
-
+;;;###autoload
 (defun platformio-conditionally-enable ()
   "Enable `platformio-mode' only when a `platformio.ini' file is present in project root."
   (condition-case nil
@@ -101,15 +102,16 @@
     (compilation-start cmd 'platformio-compilation-mode)))
 
 (defun platformio--silent-arg ()
-  (if platformio-mode-silent
-      "-s "
-    nil))
+  "Return command line argument to make things silent."
+  (when platformio-mode-silent
+    "-s "))
 
-(defun platformio--run (runcmd &optional NOSILENT)
+(defun platformio--run (runcmd &optional NOTSILENT)
+  "Execute command RUNCMD, optionally NOTSILENT."
   (platformio--exec (concat "run "
-                            (unless NOSILENT
-                              (platformio--silent-arg))
-                            runcmd)))
+                  (unless NOTSILENT
+                    (platformio--silent-arg))
+                  runcmd)))
 
 
 ;;; Board list functions
@@ -184,30 +186,30 @@
 
 
 ;;; User commands
-(defun platformio-build (arg)
-  "Build PlatformIO project."
+(defun platformio-build (project)
+  "Build PlatformIO PROJECT."
   (interactive "P")
-  (platformio--run nil arg))
+  (platformio--run nil project))
 
-(defun platformio-upload (arg)
-  "Upload PlatformIO project to device."
+(defun platformio-upload (project)
+  "Upload PlatformIO PROJECT to device."
   (interactive "P")
-  (platformio--run "-t upload" arg))
+  (platformio--run "-t upload" project))
 
-(defun platformio-programmer-upload (arg)
-  "Upload PlatformIO project to device using external programmer."
+(defun platformio-programmer-upload (project)
+  "Upload PlatformIO PROJECT to device using external programmer."
   (interactive "P")
-  (platformio--run "-t program" arg))
+  (platformio--run "-t program" project))
 
-(defun platformio-spiffs-upload (arg)
-  "Upload SPIFFS to device."
+(defun platformio-spiffs-upload (project)
+  "Upload SPIFFS from PROJECT to device."
   (interactive "P")
-  (platformio--run "-t uploadfs" arg))
+  (platformio--run "-t uploadfs" project))
 
-(defun platformio-clean (arg)
-  "Clean PlatformIO project."
+(defun platformio-clean (project)
+  "Clean PlatformIO PROJECT."
   (interactive "P")
-  (platformio--run "-t clean" arg))
+  (platformio--run "-t clean" project))
 
 (defun platformio-update ()
   "Update installed PlatformIO libraries."
