@@ -6,6 +6,8 @@
 ;; Author: Zach Massia <zmassia@gmail.com>
 ;;         Dante Catalfamo <dante@lambda.cx>
 ;; URL: https://github.com/zachmassia/platformio-mode
+;; Package-Version: 20210511.957
+;; Package-Commit: f4fd8932995a8aed80eab14e54232010c2889012
 ;; Version: 0.3.0
 ;; Package-Requires: ((emacs "25.1") (async "1.9.0") (projectile "0.13.0"))
 
@@ -61,6 +63,16 @@
   :group 'platformio
   :type 'string)
 
+(defcustom platformio-executable "platformio"
+  "The platformio executable to use."
+  :group 'platformio
+  :type 'string)
+
+(defcustom platformio-default-flags "-f -c emacs"
+  "The default flags for platformio command to use."
+  :group 'platformio
+  :type 'string)
+
 
 (define-compilation-mode platformio-compilation-mode "PIOCompilation"
   "PlatformIO specific `compilation-mode' derivative."
@@ -92,7 +104,7 @@
 (defun platformio--exec (target)
   "Call `platformio ... TARGET' in the root of the project."
   (let ((default-directory (projectile-project-root))
-        (cmd (concat "platformio -f -c emacs " target)))
+        (cmd (concat platformio-executable " " platformio-default-flags " " target)))
     (unless default-directory
       (user-error "Not in a projectile project, aborting"))
     (save-some-buffers (not compilation-ask-about-save)
